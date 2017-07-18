@@ -62,7 +62,29 @@ class Auth extends Component {
 			.catch(e => {
 				var err = e.message;
 				this.setState({err: err});
+			});
+	}
+
+	google(){
+		var provider = new firebase.auth.GoogleAuthProvider();
+
+		var promise = firebase.auth().signInWithPopup(provider);
+		promise
+			.then(result => {
+				var user = result.user;
+				var msg = "Welcome "+user.displayName;
+				firebase.database().ref('users/'+user.uid).set({
+					email: user.email,
+					name: user.displayName
+				});
+				this.setState({err: msg});
 			})
+			.catch(e => {
+				var err = e.message;
+				console.log(err);
+				this.setState({err: err});
+			});
+
 	}
 
 	constructor(props) {
@@ -74,6 +96,7 @@ class Auth extends Component {
 		this.login = this.login.bind(this);
 		this.logout = this.logout.bind(this);
 		this.signup = this.signup.bind(this);
+		this.google = this.google.bind(this);
 	}
 
 	render() {
@@ -86,6 +109,7 @@ class Auth extends Component {
 				<button onClick={this.login}>LOGIN</button>
 				<button onClick={this.signup}>SIGN-UP</button>
 				<button id='logout' className='hide' onClick={this.logout}>LOGOUT</button>
+				<button onClick={this.google}>LOGIN WITH GOOGLE</button>
 			</div>
 		);
 	}

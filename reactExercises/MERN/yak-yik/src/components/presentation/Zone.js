@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './styles';
+import styles from './presStyles';
 
 class Zone extends Component {
     render() {
@@ -9,7 +9,7 @@ class Zone extends Component {
         		<div style={style.container}>
         			<h2 style={style.h2}><a style={style.a} href='#'>{this.props.currentZone.name}</a></h2>
         			<span className='detail'>{this.props.currentZone.zipCode}</span><br />
-        			<span className='detail'>{this.props.currentZone.numComments} comments</span>
+        			<span className='detail'>Comments: {this.props.currentZone.numComments}</span>
         		</div>
             </div>
         );

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Comment from '../presentation/Comment';
 import styles from './containerStyles';
+import { APIManager } from '../../utils';
 
 class Comments extends Component {
 	constructor(props) {
@@ -16,9 +17,22 @@ class Comments extends Component {
 		};
 	};
 
+	componentDidMount() {
+		APIManager.get('/api/comment', null, (err, res) => {
+			if(err) {
+				alert('ERROR: '+err.message);
+				return;
+			};
+
+			this.setState({
+				list: res.results
+			});
+		});
+	};
+
 	submitComment() {
 		console.log("Button Clicked!" + JSON.stringify(this.state.comment));
-		
+
 		let updateList = Object.assign([], this.state.list);
 		updateList.push(this.state.comment);
 

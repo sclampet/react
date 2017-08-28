@@ -50,7 +50,7 @@ router.get('/:resource/:id', function(req, res, next) {
 		}
 
 		res.json({
-			confirmation: 'sucess',
+			confirmation: 'success',
 			result: result
 		});
 	});
@@ -59,7 +59,7 @@ router.get('/:resource/:id', function(req, res, next) {
 router.post('/:resource', function(req, res, next) {
 	var resource = req.params.resource;
 	// console.log('resource', resource)
-	var controller = controllers[resource];	
+	var controller = controllers[resource];
 
 	controller.create(req.body, function(err, result) {
 		if(err) {

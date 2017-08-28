@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Zone from '../presentation/Zone';
+import { APIManager } from '../../utils';
 
 class Zones extends Component {
 
@@ -14,6 +15,20 @@ class Zones extends Component {
 		};
 	}
 
+	componentDidMount() {
+		APIManager.get('/api/zone', null, (err, res) => {
+			if(err) {
+				alert('ERROR: '+err.message);
+				return;
+			};
+
+			this.setState({
+				list: res.results
+			});
+		});
+
+	};
+
 	updateZone(event) {
 		// console.log('Zone Updated: '+ event.target.id + ' == ' + event.target.value);
 		let updatedZone = Object.assign({}, this.state.zone);
@@ -25,12 +40,28 @@ class Zones extends Component {
 	};
 
 	addZone() {
-		let updatedList = Object.assign([], this.state.list);
-		updatedList.push(this.state.zone);
+		let updatedZone = Object.assign({}, this.state.zone);
+		//split the object by ',' because form body is currently a string obj; returns an array (Backend expects and array);
+		updatedZone['zipCodes'] = updatedZone.zipCode.split(',');
 
-		this.setState({
-			list: updatedList
+		APIManager.post('/api/zone', updatedZone, (err, res) => {
+			if(err) {
+				alert('ERROR: ' + err.message)
+				return;
+			};
+
+			console.log('ZONE CREATED: ' + JSON.stringify(res));
+
+			let updatedList = Object.assign([], this.state.list);
+			updatedList.push(res.result);
+			//
+			// this.setState({
+			// 	list: updatedList
+			// });
+
+
 		});
+
 	};
 
 

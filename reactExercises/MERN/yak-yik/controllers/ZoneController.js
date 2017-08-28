@@ -17,25 +17,13 @@ module.exports = {
 				callback(err, null);
 				return;
 			}
-			
+
 			callback(null, zone);
 		});
 
 	},
 
 	create: function(params, callback) {
-
-		var zips = params['zipCodes'];
-		// console.log(zips)
-		var zip = zips.split(',');
-		var newZips = [];
-		zip.forEach(function(zipCode) {
-			newZips.push(zipCode.trim());
-		});
-
-		params['zipCodes'] = newZips;
-		// console.log('zips:', zips)
-
 		Zone.create(params, function(err, zone) {
 		console.log('************Creating Zone**********************')
 			if(err) {
@@ -59,7 +47,7 @@ module.exports = {
 
 		});
 	},
-	
+
 
 
 	remove: function() {
@@ -74,7 +62,7 @@ module.exports = {
 			};
 
 			callback(null, null);
-			
+
 		});
 	},
 

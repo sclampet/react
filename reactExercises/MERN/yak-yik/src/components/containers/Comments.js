@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Comment from '../presentation/Comment';
+import { Comment, CreateComment } from '../presentation';
 import styles from './containerStyles';
 import { APIManager } from '../../utils';
 
@@ -7,12 +7,6 @@ class Comments extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			comment: {
-				username: '',
-				body: '',
-				timestamp: ''
-			},
-
 			list: [],
 		};
 	};
@@ -30,15 +24,26 @@ class Comments extends Component {
 		});
 	};
 
-	submitComment() {
-		console.log("Button Clicked!" + JSON.stringify(this.state.comment));
+	submitComment(comment) {
+		// console.log("Button Clicked! Comment being passed = " + JSON.stringify(comment));
 
-		let updateList = Object.assign([], this.state.list);
-		updateList.push(this.state.comment);
+		APIManager.post('/api/comment', comment, (err, res) => {
+			if(err) {
+				alert('Error: ' + err);
+				return;
+			};
 
-		this.setState({
-			list: updateList
+			console.log(JSON.stringify(res));
+
+			let updateList = Object.assign([], this.state.list);
+			updateList.push(res.result);
+
+			this.setState({
+				list: updateList
+			});
+
 		});
+
 	};
 
 	updateComment(event) {
@@ -68,11 +73,7 @@ class Comments extends Component {
 	                <ul style={style.commentsList}>
 	                	{commentList}
 	                </ul>
-
-	                <input id='username' onChange={this.updateComment.bind(this)} className='form-control' type='text' placeholder='Username' /><br />
-	                <input id='body' onChange={this.updateComment.bind(this)} className='form-control' type='text' placeholder='Comment' /><br />
-	                <button onClick={this.submitComment.bind(this)} className='btn btn-info'>Submit Comment</button>
-
+									<CreateComment onCreate={this.submitComment.bind(this)} />
             	</div>
             </div>
         );

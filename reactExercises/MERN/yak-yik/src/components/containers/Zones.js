@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Zone from '../presentation/Zone';
+import {Zone, CreateZone} from '../presentation';
 import { APIManager } from '../../utils';
 
 class Zones extends Component {
@@ -7,10 +7,6 @@ class Zones extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			zone: {
-				name: '',
-				zipCode: ''
-			},
 			list: [],
 		};
 	}
@@ -39,8 +35,8 @@ class Zones extends Component {
 		});
 	};
 
-	addZone() {
-		let updatedZone = Object.assign({}, this.state.zone);
+	addZone(zone) {
+		let updatedZone = Object.assign({}, zone);
 		//split the object by ',' because form body is currently a string obj; returns an array (Backend expects and array);
 		updatedZone['zipCodes'] = updatedZone.zipCode.split(',');
 
@@ -54,12 +50,9 @@ class Zones extends Component {
 
 			let updatedList = Object.assign([], this.state.list);
 			updatedList.push(res.result);
-			//
-			// this.setState({
-			// 	list: updatedList
-			// });
-
-
+			this.setState({
+				list: updatedList
+			});
 		});
 
 	};
@@ -78,10 +71,8 @@ class Zones extends Component {
                 <ol>
                 	{listItems}
                 </ol>
-                <input id='name' onChange={this.updateZone.bind(this)} className='form-control' type='text' placeholder='Zone Name' /><br />
-                <input id='zipCode' onChange={this.updateZone.bind(this)} className='form-control' type='text' placeholder='Zip Code' /><br />
-                <button onClick={this.addZone.bind(this)} className='btn btn-info'>Add New Zone</button>
-            </div>
+								<CreateZone onCreate={this.addZone.bind(this)} />
+					</div>
         );
     }
 }

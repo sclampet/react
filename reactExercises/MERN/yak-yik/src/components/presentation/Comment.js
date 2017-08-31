@@ -8,9 +8,9 @@ class Comment extends Component {
 					{this.props.info.body}
 				</p>
 
-                <span style={{fontWeight:200}}>{this.props.info.timestamp}</span>
-                	<span style={{marginLeft:12, marginRight:12}}> | </span>
                 <span style={{fontWeight:200}}>{this.props.info.username}</span>
+                <span style={{marginLeft:12, marginRight:12}}> | </span>
+                <span style={{fontWeight:200}}>{this.props.info.timestamp}</span>
                 <hr />
             </div>
         );

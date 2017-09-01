@@ -7,6 +7,7 @@ class Zones extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			selected: 0,
 			list: [],
 		};
 	}
@@ -14,7 +15,7 @@ class Zones extends Component {
 	componentDidMount() {
 		APIManager.get('/api/zone', null, (err, res) => {
 			if(err) {
-				alert('ERROR: '+err.message);
+				alert('ERROR: '+ err.message);
 				return;
 			};
 
@@ -36,11 +37,10 @@ class Zones extends Component {
 	};
 
 	addZone(zone) {
-		let updatedZone = Object.assign({}, zone);
 		//split the object by ',' because form body is currently a string obj; returns an array (Backend expects and array);
-		updatedZone['zipCodes'] = updatedZone.zipCode.split(',');
+		zone['zipCodes'] = zone.zipCode.split(',');
 
-		APIManager.post('/api/zone', updatedZone, (err, res) => {
+		APIManager.post('/api/zone', zone, (err, res) => {
 			if(err) {
 				alert('ERROR: ' + err.message)
 				return;
@@ -57,13 +57,24 @@ class Zones extends Component {
 
 	};
 
+	selectZone(index) {
+		console.log('selected zone! ' + index);
 
+		this.setState({
+			selected: index
+		})
+
+	};
 
 
     render() {
 
     	const listItems = this.state.list.map((zone, i) => {
-    		return (<li key={i}><Zone currentZone={zone} /></li>)
+				let selected = (i == this.state.selected);
+    		return (
+					<li key={i}>
+						<Zone index={i} select={this.selectZone.bind(this)} isSelected={selected} currentZone={zone} />
+						</li>)
     	});
 
         return (

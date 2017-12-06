@@ -13,7 +13,7 @@ class TodoListItem extends Component {
         if(this.state.isEditing) {
             return(
                 <td>
-                    <button>Save</button>
+                    <button onClick={this.onSaveClick.bind(this)}>Save</button>
                     <button onClick={this.onCancelClick.bind(this)}>Cancel</button>
                 </td>
             );
@@ -21,7 +21,31 @@ class TodoListItem extends Component {
         return(
             <td>
                 <button onClick={this.onEditClick.bind(this)}>Edit</button>
-                <button>Delete</button>
+                <button onClick={this.props.deleteTask.bind(this, this.props.task)}>Delete</button>
+            </td>
+        );
+    }
+
+    renderTaskSection() {
+        const { task, isComplete } = this.props;
+
+        const taskStyle = {
+            color: isComplete ? 'green': 'red',
+            cursor: 'pointer'
+        }
+
+        if(this.state.isEditing) {
+            return(
+                <td>
+                    <form onSubmit={this.onSaveClick.bind(this)}>
+                        <input type='text' defaultValue={task} ref="editInput" />
+                    </form>
+                </td>
+            );
+        }
+        return(
+            <td style={taskStyle} onClick={this.props.toggleTask.bind(this, task)}>
+                {task}
             </td>
         );
     }
@@ -29,10 +53,18 @@ class TodoListItem extends Component {
     render() {
         return (
             <tr>
-                <td>{this.props.task}</td>
+                {this.renderTaskSection()}
                 {this.renderActionSection()}
             </tr>
         );
+    }
+
+    onSaveClick(event) {
+        event.preventDefault();
+        const oldTask = this.props.task;
+        const newTask = this.refs.editInput.value;
+        this.props.saveTask(oldTask, newTask);
+        this.setState({isEditing: false});
     }
 
     onEditClick() {

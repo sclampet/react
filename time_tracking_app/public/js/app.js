@@ -1,7 +1,4 @@
-/*
-  eslint-disable react/prefer-stateless-function, react/jsx-boolean-value,
-  no-undef, jsx-a11y/label-has-for, react/jsx-first-prop-new-line
-*/
+
 class TimersDashboard extends React.Component {
   state = {
     timers: [],
@@ -78,7 +75,6 @@ class TimersDashboard extends React.Component {
   };
 
   startTimer = (timerId) => {
-    // ...
     const now = Date.now();
 
     this.setState({

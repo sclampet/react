@@ -1,0 +1,32 @@
+Arguments: 
+  /usr/local/bin/node /Users/scottclampet/.yarn/bin/yarn.js run ios
+
+PATH: 
+  /Users/scottclampet/.yarn/bin:/Users/scottclampet/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  6.11.2
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/Users/scottclampet/Desktop/development/git/react"
+      at MessageError.Error (native)
+      at new MessageError (/Users/scottclampet/.yarn/lib/cli.js:186:110)
+      at /Users/scottclampet/.yarn/lib/cli.js:40048:15
+      at next (native)
+      at step (/Users/scottclampet/.yarn/lib/cli.js:98:30)
+      at /Users/scottclampet/.yarn/lib/cli.js:109:13

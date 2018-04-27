@@ -1,6 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, PickerIOS } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+
+import Picker from './picker/Picker';
 
 // create a component
 class Alarm extends Component {
@@ -8,20 +10,13 @@ class Alarm extends Component {
         periods: ['AM', 'PM'],
     };
 
-    onTimeSelected = () => {
-        console.log('====================================');
-        console.log('Time Selected');
-        console.log('====================================');
-    }
-
     render() {
         const now = new Date();
         return (
             <View style={styles.container}>
-                    <PickerIOS 
-                        initDate={now.toISOString()}
-                        onTimeSelected={(date) => this.onTimeSelected(date)} 
-                    />
+                <View style={styles.setAlarmBox}>
+                    <Picker type="alarm"/>
+                </View>
             </View>
         );
     }

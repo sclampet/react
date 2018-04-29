@@ -1,7 +1,7 @@
-import Alarm from './alarm/Alarm';
+import AlarmSettings from './alarm/AlarmSettings';
 import Analytics from './analytics/Analytics';
 
 module.exports = {
-    Alarm,
+    AlarmSettings,
     Analytics
 }
